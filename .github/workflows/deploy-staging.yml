@@ -16,8 +16,8 @@ jobs:
       - name: 🛠️ Install Dependencies
         run: npm install
 
-      - name: 🏗️ Build React App
-        run: npm run build
+      - name: 🏗️ Build Next.js App
+        run: npm run build && npx next export
 
       - name: 📤 Deploy to STAGING via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
@@ -25,5 +25,5 @@ jobs:
           server: ${{ secrets.STAGING_FTP_SERVER }}
           username: ${{ secrets.STAGING_FTP_USERNAME }}
           password: ${{ secrets.STAGING_FTP_PASSWORD }}
-          local-dir: build/
+          local-dir: out/
           server-dir: /testing/  # Updated to match your subdomain folder
