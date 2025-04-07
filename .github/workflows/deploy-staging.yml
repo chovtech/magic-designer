@@ -25,5 +25,5 @@ jobs:
           server: ${{ secrets.STAGING_FTP_SERVER }}
           username: ${{ secrets.STAGING_FTP_USERNAME }}
           password: ${{ secrets.STAGING_FTP_PASSWORD }}
-          local-dir: build
+          local-dir: build/
           server-dir: /testing/  # Updated to match your subdomain folder
