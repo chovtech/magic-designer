@@ -1,26 +1,29 @@
-name: 🚀 Deploy to SmartWeb via SFTP
+name: 🚀 Deploy to Staging Server
 
 on:
   push:
     branches:
-      - main
+      - main  # or change this to "master" if that’s your default
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
       - name: 📥 Checkout Repository
         uses: actions/checkout@v3
 
-      - name: 📤 Deploy via SFTP
+      - name: 🛠️ Install Dependencies
+        run: npm install
+
+      - name: 🏗️ Build Next.js App
+        run: npm run build
+
+      - name: 📤 Deploy to STAGING via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
-          server: ${{ secrets.SFTP_HOST }}  # SFTP server host (e.g., triominds.com.ng)
-          username: ${{ secrets.SFTP_USERNAME }}  # SFTP username (e.g., triomind)
-          password: ${{ secrets.SFTP_PASSWORD }}  # SFTP password
-          port: ${{ secrets.SFTP_PORT }}  # Typically 22 for SFTP
-          local-dir: ./  # Local directory to upload
-          remote-dir: /public_html/dev.edumess.com/  # Remote directory
-          protocol: sftp  # Ensure that the protocol is set to sftp
-          debug: true  # Enable debugging output (optional, useful for troubleshooting)
+          server: ${{ secrets.STAGING_FTP_SERVER }}
+          username: ${{ secrets.STAGING_FTP_USERNAME }}
+          password: ${{ secrets.STAGING_FTP_PASSWORD }}
+          local-dir: out/             # 👈 This should be "out/"
+          server-dir: /testing/       # or the path you set for testing
